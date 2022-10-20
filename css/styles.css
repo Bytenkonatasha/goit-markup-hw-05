@@ -10,6 +10,7 @@ body {
      font-family:"Roboto",sans-serif;
      font-size:14px;
      letter-spacing: 0.03em;
+     margin-top: 80px;
       }
 li{
      list-style:none;
@@ -41,8 +42,14 @@ ul{
     margin-right: auto;
     }
 .header {
-     display: block;
+      position: fixed;
+      z-index: 1;
+      width: 100%;
+      top: 0;
+      left: 0;
+      display: block;
       border-bottom: 1px solid #ececec;
+      background: var(--color-accent);
 }
 .nav-header {
      display:flex;
@@ -71,9 +78,25 @@ ul{
      display:flex;
      margin-left: auto;
      } 
-     .items-nav .link.current{
-          color: var(--color-brand);
-     }
+.items-nav .link.current{
+      color: var(--color-brand);
+ }
+.current {
+      position:relative;
+      text-decoration:none;
+}
+.current::after {
+      content: "";
+      position:absolute;
+      height:4px;
+      left:0;
+      bottom:0;
+      display:block;
+      width:100%;
+      height:4px;
+      border-radius:2px;
+      background:var(--color-brand);
+}
 
 .auth-nav .items + .items {
      margin-left: 50px;
@@ -98,6 +121,8 @@ ul{
 }
 
 .link {
+     transition:color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+     fill 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
      display: block;
      padding-top: 32px;
      padding-bottom: 32px;
@@ -157,6 +182,9 @@ ul{
          margin-right: auto;
     }
 .buttons {
+     transition:color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
            padding:10px;
            width: 216px; 
            border-radius: 4px;
@@ -178,8 +206,52 @@ ul{
 .buttons:focus { 
            color:var(--color-accent);
            background-color: #188ce8;
+           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
      }
-    
+     /* модальне вікно */
+.backdrop {
+     z-index: 999;
+     padding: 94px 15px;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.2);
+     overflow-y: scroll;
+     transition:all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+     }   
+     
+.backdrop.is-hidden {
+     opacity: 1;
+     pointer-events: none;
+     visibility: hidden;
+     }  
+.modal {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     height: 581px;
+     width: 528px;
+     padding: 15px;
+     background-color: var(--color-accent);
+     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+     border-radius: 4px;
+}   
+.button-close {
+     position: absolute;
+     top: 8px;
+     right: 8px;
+     width: 30px;
+     height: 30px;
+     padding: 5px 4px 6px 4px;
+     border: 1px solid rgba(0, 0, 0, 0.1);
+     background: var(--color-accent);
+     border-radius: 50%;
+     cursor: pointer;
+     fill: #000;
+}
 
 .work {
      display:flex;
@@ -257,17 +329,37 @@ img {
      display: flex;
      height: auto;
 }      
-.img   {   
+.img   {  
         display: flex;
     }       
 .img .img-item:not(:last-child) {
         margin-right: 30px;
         }
 .img-item {
+         position: relative; 
          text-align: center;
          border-radius: 0px 0px 4px 4px;
          background-color: var(--color-accent);
         }
+.meta {
+     position: absolute;
+     display: flex;
+     bottom: 0;
+     left: 0;
+     background: rgba(47, 48, 58, 0.8);
+     width: 100%;
+     height: 70px;
+     justify-content: center;
+     align-items: center;
+     } 
+     .meta-nav {
+          color: var(--color-accent);
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 1.14;
+          letter-spacing: 0.03em;
+          text-transform: uppercase;
+     }       
 .team {
           box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
         }
@@ -290,6 +382,8 @@ img {
      padding-bottom: 30px;
      }
 .social-nav{
+      transition:fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
      display: flex;
      width: 44px;
      height: 44px;
@@ -311,6 +405,8 @@ img {
          color: var(--color-secondary)
      }
 .clients {
+      transition:fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      border 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
       display: flex;
       width:100%;
       height:100%;
@@ -354,6 +450,7 @@ img {
         margin-bottom: 20px;
       }
 .list {
+     transition:color 250ms cubic-bezier(0.4, 0, 0.2, 1);
          color: var(--color-accent);      
          letter-spacing: 0.03em;
          font-style:normal;
@@ -390,6 +487,8 @@ img {
      gap: 70px;
 }
 .footer-social {
+     transition:fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+     background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
      display: flex;
      width: 44px;
      height: 44px;
@@ -438,6 +537,8 @@ img {
      border-right: 1px solid rgba(238, 238, 238, 1);
 }
 .box {
+     transition:box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+     background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
      display:block;
 }
 .box:hover,
@@ -446,10 +547,42 @@ img {
      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
 
 }
+.card-img {
+     position: relative;
+     overflow: hidden;
+    }
+.card-overlay {
+     position: absolute;
+     background-color: rgba(33, 150, 243, 0.9);
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     transition-property: transform;
+     transition-duration: 250ms;
+     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+     transform: translateY(100%);
+     opacity: 0;
+    }
+.card-text {
+     padding: 63px 24px;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 2;
+     letter-spacing: 0.03em;
+     color: var(--color-accent);
+     }
+     .box:hover .card-overlay {
+          transform: translateY(0);
+          opacity: 1;
+     }
 .pic {
      display:flex;
 }
 .list-button {
+     transition:color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+           background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+           box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
         border-radius: 4px;
         padding:6px 22px;
         /* min-width: 54px; */
@@ -468,6 +601,7 @@ img {
 .list-button:focus {
          color: var(--color-accent);
          background-color: var(--color-brand);
+         box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12)
 }
 .heading {
          margin-bottom: 4px;          
